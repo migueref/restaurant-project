@@ -1,31 +1,30 @@
-<?php
-	include_once("controllers/ProductsController.php");
-?>
 
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8" />
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-
+    <title>Crear categoría</title>
   </head>
   <body>
 		<?php
-			include_once('views/partials/header.php');
+			include_once('../partials/header.php');
 		?>
 		<main>
 			<section>
-				<div class="row">
-					<?php foreach ($productos as $producto) { ?>
-					<article class="card col-xs-12 col-sm-12 col-md-4 col-lg-4">
-						<img class="card-img-top" src="./views/img/pizza-pepperoni.jpg" alt="Card image cap">
-					  <div class="card-body">
-					    <h4 class="card-title"><?php echo $producto['nombre'];?></h4>
-					    <p class="card-text"><?php echo $producto['descripcion'];?>.</p>
-					    <a href="#" class="btn btn-primary">Go somewhere</a>
-					  </div>
-					</article>
-					<?php }?>
+				<div class="container">
+
+          <form action="../../controllers/CategoriesController.php" method="post">
+            <input type="hidden" name="operacion" value="registrarCategoria">
+            <div class="form-group">
+              <input type="text" class="form-control" name="nombreCategoria" placeholder="Ingrese nombre de categoría" required>
+            </div>
+            <div class="form-group">
+              <textarea name="descripcionCategoria" class="form-control" placeholder="Escriba descripción aquí" required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Guardar cambios</button>
+          </form>
 				</div>
 			</section>
 		</main>
