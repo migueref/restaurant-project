@@ -7,7 +7,8 @@ class Product {
       $this->nombre = $nombre;
   }
 
-	public static function get() {
+	public static function get()
+	{
 		$sql = "SELECT
 							*
 						FROM
@@ -17,6 +18,19 @@ class Product {
 			return $rows;
 		}
 		return false;
+	}
+	public static function delete($product_id)
+	{
+		$sql = "DELETE
+						FROM
+							productos
+						WHERE
+							id = $product_id
+						";
+		//echo $sql;
+		$db = new Database();
+		$db->query($sql);
+
 	}
 
 

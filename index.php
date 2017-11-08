@@ -22,7 +22,11 @@
 					  <div class="card-body">
 					    <h4 class="card-title"><?php echo $producto['nombre'];?></h4>
 					    <p class="card-text"><?php echo $producto['descripcion'];?>.</p>
-					    <a href="#" class="btn btn-primary">Go somewhere</a>
+					    <form action="./controllers/ProductsController.php" method="post">
+								<input type="hidden" name="operacion" value="eliminarProducto">
+								<input type="hidden" name="idProducto" value="<?php echo $producto['id'];?>">
+								<input type="submit" class="btn btn-danger" value="Eliminar">
+					    </form>
 					  </div>
 					</article>
 					<?php }?>
