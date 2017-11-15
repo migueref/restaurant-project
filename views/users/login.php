@@ -1,13 +1,10 @@
-<?php
-  session_start();
-  if(isset($_SESSION['is_logged_in'])) {
- ?>
+
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8" />
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-    <title>Crear categoría</title>
+    <title>Iniciar sesión</title>
   </head>
   <body>
 		<?php
@@ -17,13 +14,13 @@
 			<section>
 				<div class="container">
 
-          <form action="../../controllers/CategoriesController.php" method="post">
-            <input type="hidden" name="operacion" value="registrarCategoria">
+          <form action="../../controllers/UsersController.php" method="post">
+            <input type="hidden" name="operacion" value="login">
             <div class="form-group">
-              <input type="text" class="form-control" name="nombreCategoria" placeholder="Ingrese nombre de categoría" required>
+              <input type="email" class="form-control" name="email" placeholder="Ingrese su email" required>
             </div>
             <div class="form-group">
-              <textarea name="descripcionCategoria" class="form-control" placeholder="Escriba descripción aquí" required></textarea>
+              <input type="password" class="form-control" name="password" placeholder="Ingrese su contraseña" required>
             </div>
 
             <button type="submit" class="btn btn-primary">Guardar cambios</button>
@@ -37,9 +34,3 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
   </body>
 </html>
-<?php
-
-} else {
-  header('Location: ../users/login.php');
-}
- ?>
