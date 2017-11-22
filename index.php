@@ -43,7 +43,7 @@
 			            Bienvenido <?php echo $_SESSION['user_data']['nombre'];?>
 			          </a>
 			          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-			            <a class="dropdown-item" href="./views/users/login.php">Cerrar sesión</a>
+			            <a class="dropdown-item" onclick="logout()">Cerrar sesión</a>
 			          </div>
 							<?php endif?>
 		        </li>
@@ -58,7 +58,8 @@
 		<main>
 			<section>
 				<div class="row">
-					<?php foreach ($productos as $producto) { ?>
+
+					<?php foreach ($productos as $producto): ?>
 					<article class="card col-xs-12 col-sm-12 col-md-4 col-lg-4">
 						<img class="card-img-top" src="./views/img/pizza-pepperoni.jpg" alt="Card image cap">
 					  <div class="card-body">
@@ -66,18 +67,69 @@
 					    <p class="card-text"><?php echo $producto['descripcion'];?>.</p>
 					    <form action="./controllers/ProductsController.php" method="post">
 								<input type="hidden" name="operacion" value="eliminarProducto">
-								<input type="hidden" name="idProducto" value="<?php echo $producto['id'];?>">
+								<input type="hidden" id="idProducto" name="idProducto" value="<?php echo $producto['id'];?>">
 								<input type="submit" class="btn btn-danger" value="Eliminar">
+								<br>
+
+								<button type="button" class="col-xs-12 col-md-12 col-lg-12 btn btn-success" onclick="agregarCarrito(<?php echo $producto['id'];?>)">Agregar al carrito</button>
 					    </form>
 					  </div>
 					</article>
-					<?php }?>
+					<?php endforeach ?>
+
 				</div>
 			</section>
 		</main>
 
-		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+		<script
+  src="https://code.jquery.com/jquery-3.2.1.js"
+  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+		<script type="text/javascript">
+			var cantidad = 0;
+			var listaProductos = new Array;
+
+			function logout() {
+				console.log("inicio logout");
+
+				$.ajax({
+				  type: "POST",
+				  url: 'controllers/UsersController.php',
+				  data: {
+						operacion: "logout"
+					},
+				  success: success,
+				  dataType: dataType
+				});
+				console.log("fin logout");
+
+			}
+
+			function agregarCarrito(idProducto) {
+				cantidad = prompt("seleccione cantidad");
+
+
+				listaProductos.push({
+															idProducto:idProducto,
+															cantidad:cantidad
+														});
+				console.log(listaProductos)
+				let arregloJSON = JSON.stringify(listaProductos);
+				$.ajax({
+					method: "POST",
+					url: "controllers/OrdersController.php",
+					data:
+					{
+						operacion: "agregarPedido",
+						productos: arregloJSON
+					}
+				})
+				.done(function() {
+					console.log( "Datos guardados ");
+				});
+			}
+		</script>
   </body>
 </html>

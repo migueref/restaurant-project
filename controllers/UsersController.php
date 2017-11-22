@@ -14,7 +14,9 @@ if( isset($_POST['operacion']) ) {
         die("Tus datos son incorrectos");
       }
       break;
-
+    case 'logout':
+      echo "Hola mundo con AJAX - peticiones asíncronas :)";
+      break;
     default:
       # code...
       break;

@@ -17,13 +17,22 @@
           <a class="nav-link" href="../customers/create.php">Insertar Cliente</a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            ¿Quieres ingresar?
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="../users/login.php">Iniciar sesión</a>
-            <a class="dropdown-item" href="#">Registrarse</a>
-          </div>
+          <?php if(! isset($_SESSION['is_logged_in'])):?>
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              ¿Quieres ingresar?
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="../users/login.php">Iniciar sesión</a>
+              <a class="dropdown-item" href="#">Registrarse</a>
+            </div>
+          <?php else:?>
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Bienvenido <?php echo $_SESSION['user_data']['nombre'];?>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="../../controllers/logout.php">Cerrar sesión</a>
+            </div>
+          <?php endif?>
         </li>
 
       </ul>
