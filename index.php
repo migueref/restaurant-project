@@ -56,7 +56,7 @@
 
 
 		<main>
-			<section>
+			<section class="container">
 				<div class="row">
 
 					<?php foreach ($productos as $producto): ?>
@@ -78,6 +78,13 @@
 					<?php endforeach ?>
 
 				</div>
+				<div class="row">
+					<?php if( isset($_SESSION['is_logged_in'])):?>
+					<button class="col-xs-12 col-sm-12 col-md-12 col-lg-12 btn btn-warning" onclick="confirmarPedido()" name="button">CONFIRMAR PEDIDO</button>
+				<?php else: ?>
+					<p>Para confirmar pedido inicia sesión</p>
+				<?php endif ?>
+				</div>
 			</section>
 		</main>
 
@@ -93,7 +100,6 @@
 
 			function logout() {
 				console.log("inicio logout");
-
 				$.ajax({
 				  type: "POST",
 				  url: 'controllers/UsersController.php',
@@ -104,18 +110,17 @@
 				  dataType: dataType
 				});
 				console.log("fin logout");
-
 			}
-
 			function agregarCarrito(idProducto) {
 				cantidad = prompt("seleccione cantidad");
-
-
 				listaProductos.push({
-															idProducto:idProducto,
-															cantidad:cantidad
-														});
-				console.log(listaProductos)
+								idProducto:idProducto,
+								cantidad:cantidad
+							});
+				console.log(listaProductos);
+			}
+			function confirmarPedido() {
+				console.log("Confirmando pedido, espere por favor");
 				let arregloJSON = JSON.stringify(listaProductos);
 				$.ajax({
 					method: "POST",
@@ -127,7 +132,8 @@
 					}
 				})
 				.done(function() {
-					console.log( "Datos guardados ");
+					listaProductos = null;
+					listaProductos = new Array;
 				});
 			}
 		</script>

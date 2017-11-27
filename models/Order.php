@@ -27,7 +27,26 @@ class Order {
 		$db = new Database();
 		$db->query($sql);
 		$lastId = (int) $db->mysqli->insert_id;
-		
+
+		return $lastId;
+
+	}
+	public static function insertProductsToOrder($pedido_id,$producto_id,$cantidad)
+	{
+		$sql = "INSERT INTO
+							pedido_producto
+							(pedido_id,producto_id, cantidad)
+						VALUES(
+							$pedido_id,
+							$producto_id,
+							$cantidad
+						)
+						";
+		//echo $sql;
+		$db = new Database();
+		$db->query($sql);
+		$lastId = (int) $db->mysqli->insert_id;
+
 		return $lastId;
 
 	}

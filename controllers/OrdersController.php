@@ -4,14 +4,10 @@ if( isset($_POST['operacion']) ) {
 
   switch ($_POST['operacion']) {
     case 'agregarPedido':
-
       $productos= json_decode($_POST['productos']);
       $pedido_id = Order::save();
-      echo $pedido_id;
       foreach ($productos as $producto) {
-        echo $producto->cantidad;
-        echo $producto->idProducto;
-        PedidoProducto::save($pedido_id, $producto->idProducto, $producto->cantidad);
+         $pedido_producto_id = Order::insertProductsToOrder($pedido_id, $producto->idProducto, $producto->cantidad);
       }
 
       break;
